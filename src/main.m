@@ -1,4 +1,4 @@
-function main(caseName, laplMat, SimComputed)
+function [V, lambda] = main(caseName, laplMat, SimComputed)
 % MAIN main function which clusters a real-world dataset using different types of
 % spectral clustering techniques and evaluates the results.
 % 
@@ -25,7 +25,7 @@ function main(caseName, laplMat, SimComputed)
     if nargin < 3, SimComputed = 1; end
     if nargin < 2, laplMat  = 3; end
     if nargin < 1, error('No file specified'); end
-    if (laplMat < 1 || laplMat > 3) 
+    if (laplMat < 1 || laplMat > 4) 
         error('The input given is not applicable');
     end
     
@@ -45,8 +45,24 @@ function main(caseName, laplMat, SimComputed)
     nrows   = size(W,1);
     fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
             nrows, nonzero, nonzero/nrows);
-     
-    [V, ~]  = chooseLapl(W, 4, laplMat);
+    
+    % Number of Clusters
+    % K = 4;     
+        
+    if laplMat == 1
+        [L, ~, ~]       = chooseLapl(W, 1);
+        [V,lambda]      = eigs(L, 4, 'SM');
+    elseif laplMat == 2
+        [L, ~, ~]       = chooseLapl(W, 2);
+        [V,lambda]      = eigs(L, 4, 'SM');
+    elseif laplMat == 3
+        [L, Diag, ~]    = chooseLapl(W, 3);
+        [V,lambda]      = eigs(L, Diag, 4, 'SM');
+    else
+        [L, Diag, beta] = chooseLapl(W, 4);
+        [V,lambda]      = eigs(L, Diag^(-beta), 4, 'SM');
+        
+    end
     rng('default')
     x_spec  = kmeans(V, 4,'Replicates', 10);
 

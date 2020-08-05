@@ -1,4 +1,6 @@
 function [accuracy, cuts, ncuts, modularity] = computeAccCutModulBeta(W, K, label)
+% TO CHANGE FOR NEW IMPLEMENTATION OF CHOOSLAPL!!!!
+
 % COMPUTEACCCUTMODULBETA compute accuracy, cuts, and modularity of
 % different clustering results which depend on different values of beta 
 % ranging from 1 to 2 for constructing the Random-Walk Laplacian

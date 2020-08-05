@@ -1,4 +1,4 @@
-function [V, lambda] = randomWalkBeta(W,K,beta)
+function [L_unorm, Diag] = randomWalkBeta(W)
 % RANDWALKLAPL Compute random-walk Laplacian and K smallest eigenvectors
 % depending on beta values
     fprintf('--------------------------------\n');
@@ -18,5 +18,5 @@ function [V, lambda] = randomWalkBeta(W,K,beta)
     %     L_rw2 = L_rw / norm(full(L_rw));
     %     [V,~]  = eigs(L_rw, K, 'SM');
     L_unorm = Diag - W;
-    [V,lambda] = eigs(L_unorm,Diag^(beta),K,'SM');
+%     [V,lambda] = eigs(L_unorm,Diag^(beta),K,'SM');
 end

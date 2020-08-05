@@ -1,4 +1,4 @@
-function [V, lambda] = randwalkLapl(W,K)
+function [L_unorm, Diag] = randwalkLapl(W)
 %RANDWALKLAPL Compute random-walk Laplacian and K smallest eigenvectors
     fprintf('--------------------------------\n');
     fprintf('Random Walk Laplacian\n');
@@ -17,6 +17,6 @@ function [V, lambda] = randwalkLapl(W,K)
     % %     L_rw2 = L_rw / norm(full(L_rw));
     %     [V,lambda]  = eigs(L_rw2, Diag, K, 'SM');
     L_unorm = Diag - W;
-    [V,lambda] = eigs(L_unorm,Diag,K,'SM');
+%     [V,lambda] = eigs(L_unorm,Diag,K,'SM');
 end
 

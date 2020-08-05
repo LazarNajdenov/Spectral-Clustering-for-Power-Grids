@@ -1,4 +1,6 @@
 function [Acc, Ratio, NCut, Q, beta] = computeAccCutLapl(W, label, betas)
+% TO CHANGE FOR NEW IMPLEMENTATION OF CHOOSLAPL!!!!
+
 % COMPUTEAVGACC Computes the average accuracies on the three different 
 % Laplacians constructed from an adjacency matrix with the kNN connectivity
 % function and the Max similarity function, for a particular dataset
