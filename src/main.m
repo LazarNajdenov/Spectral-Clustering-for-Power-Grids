@@ -1,4 +1,4 @@
-function [V, lambda, Xsol, costXsol, Dsol, L] = main(caseName, laplMat, SimComputed)
+function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimComputed)
 % MAIN main function which clusters a real-world dataset using different types of
 % spectral clustering techniques and evaluates the results.
 % 
@@ -21,6 +21,7 @@ function [V, lambda, Xsol, costXsol, Dsol, L] = main(caseName, laplMat, SimCompu
     addpath helperFunctions/evaluationFunctions/
     addpath helperFunctions/similarityFunctions/
     addpath helperFunctions/connectivityFunctions/
+    rng('default');
     
     if nargin < 3, SimComputed = 1; end
     if nargin < 2, laplMat  = 3; end
@@ -50,36 +51,62 @@ function [V, lambda, Xsol, costXsol, Dsol, L] = main(caseName, laplMat, SimCompu
     % K = 4;     
         
     if laplMat == 1
+        % Unnormalized Laplacian         
         [L, ~, ~]       = chooseLapl(W, 1);
-        fprintf('Manopt Grassman computation\n');
-        [Xsol, costXsol, Dsol] = Manopt_Grassmann(L, 4);
+        
+        % Manifold computations
+        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
+        [Xsol2, Dsol2] = generalized_eigenvalue_computation(L, eye(size(L)), 4);
+        
+        % Eigs computation
         [V,lambda]      = eigs(L, 4, 'SM');
     elseif laplMat == 2
+        % Normalized Laplacian
         [L, ~, ~]       = chooseLapl(W, 2);
-        fprintf('Manopt Grassman computation\n');
-        [Xsol, costXsol, Dsol] = Manopt_Grassmann(L, 4);
+        
+        % Manifold computations        
+        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
+        [Xsol2, Dsol2] = generalized_eigenvalue_computation(L, eye(size(L)), 4);
+        
+        % Eigs computation         
         [V,lambda]      = eigs(L, 4, 'SM');
     elseif laplMat == 3
+        % Random Walk Laplacian         
         [L, Diag, ~]    = chooseLapl(W, 3);
-        fprintf('Manopt Grassman computation\n');
-        [Xsol, costXsol, Dsol] = Manopt_Grassmann(L, 4);
+        
+        % Manifold computations
+        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
+        [Xsol2, Dsol2] = generalized_eigenvalue_computation(L, Diag, 4);
+        
+        % Eigs computation       
         [V,lambda]      = eigs(L, Diag, 4, 'SM');
     else
+        % Random Walk Beta Laplacian         
         [L, Diag, beta] = chooseLapl(W, 4);
-        fprintf('Manopt Grassman computation\n');
-        [Xsol, costXsol, Dsol] = Manopt_Grassmann(L, 4);
+        
+        % Manifold computations
+        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
+        [Xsol2, Dsol2] = generalized_eigenvalue_computation(L, Diag^(-beta), 4);
+        
+        % Eigs computation       
         [V,lambda]      = eigs(L, Diag^(-beta), 4, 'SM');
         
     end
     
+    
+    
+    % Compute clustering on eigenvectors     
     x_spec  = kmeans(V, 4,'Replicates', 10);
     x_spec2 = kmeans(Xsol, 4, 'Replicates', 10);
+    x_spec3 = kmeans(Xsol2, 4, 'Replicates', 10);
 
     % Evaluate clustering results, by computing confusion matrix, 
     % accuracy and RatioCut, NormalizedCut     
     evaluate_clusters(label, x_spec, W, 1, SimComputed);
     evaluate_clusters(label, x_spec2, W, 1, SimComputed);
-
+    evaluate_clusters(label, x_spec3, W, 1, SimComputed);
+    
+    
 %     matName = strcat(caseName);
 %     matName = strcat(matName,'_results.mat');
 % 
