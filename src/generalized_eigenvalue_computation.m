@@ -1,6 +1,5 @@
 function [Xsol, Dsol] = generalized_eigenvalue_computation(A, B, p)
-
-    fprintf('Generalized eigenvalue Grassman computation\n');
+    fprintf('# General. eigenvalue Grassman comput.#\n')
     if ~exist('A', 'var') || isempty(A)
         n = 128;
         A = randn(n);
@@ -29,8 +28,8 @@ function [Xsol, Dsol] = generalized_eigenvalue_computation(A, B, p)
     gGr = grassmanngeneralizedfactory(n, p, B);
 
     problem.M = gGr;
-    problem.cost  = @(X) trace(X'*A*X);
-    problem.egrad = @(X) 2*(A*X); % Only Euclidean gradient needed.
+    problem.cost  = @(X) trace( X' * A * X);
+    problem.egrad = @(X) 2 * ( A * X); % Only Euclidean gradient needed.
 
     % Execute some checks on the derivatives for early debugging.
     % These things can be commented out of course.

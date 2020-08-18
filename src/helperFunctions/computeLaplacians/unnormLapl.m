@@ -1,9 +1,7 @@
 function [L] = unnormLapl(W)
 %UNNORMLAPL Compute unnormalized Laplacian and K smallest eigenvectors
 
-    fprintf('--------------------------------\n');
-    fprintf('Unnormalized Laplacian\n');
-    fprintf('--------------------------------\n');
+    fprintf('# Unnormalized Laplacian #\n');
     % Degree matrix
     Diag = zeros(size(W,1));
     for i = 1:size(W,1)

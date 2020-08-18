@@ -27,8 +27,9 @@ function [L, Diag, beta] = chooseLapl(W, laplMat)
         [L, Diag] = randwalkLapl(W);
     % Random-Walk Beta Laplacian
     elseif laplMat == 4
-        beta = input('Choose the beta value\n');
+        beta = input('# Choose the beta value  #\n');
         [L, Diag] = randomWalkBeta(W);
     end
+    fprintf('##########################\n\n\n')
     
 end

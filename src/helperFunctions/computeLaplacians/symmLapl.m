@@ -1,8 +1,6 @@
 function [L_sym] = symmLapl(W)
 %SYMMLAPL Compute normalized symmetric Laplacian and K smallest eigenvectors
-    fprintf('--------------------------------\n');
-    fprintf('Normalized symmetric Laplacian\n');
-    fprintf('--------------------------------\n');
+    fprintf('# Normalized Sym. Lapl.  #\n');
     % Degree matrix
     Diag = zeros(size(W,1));
     for i = 1:size(W,1)

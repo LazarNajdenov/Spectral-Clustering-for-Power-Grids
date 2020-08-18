@@ -27,7 +27,7 @@ function [Confusion, ACC, RCut, NCut, Q] = evaluate_clusters(labels,clusters,W,.
             fprintf('---------------------\n');
             fprintf('ACC = %f, RCut = %f, NCut = %f, MOD = %f\n', ACC, RCut, NCut, Q);
         else
-            fprintf('RCut = %f, NCut = %f, MOD = %f\n', RCut, NCut, Q);
+            fprintf('# RCut = %f, NCut = %f, MOD = %f #\n', RCut, NCut, Q);
         end
     end
 

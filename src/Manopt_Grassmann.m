@@ -1,6 +1,7 @@
 function [Xsol, costXsol, Dsol] = Manopt_Grassmann(L, k)
-
-    fprintf('Manopt Grassman computation\n');
+    fprintf('#######################################\n')
+    fprintf('# Manopt Grassman computation         #\n');
+    fprintf('# ----------------------------------- #\n')
     % k = size(X,2);
     n = size(L,1);
     Gr = grassmannfactory(n, k);

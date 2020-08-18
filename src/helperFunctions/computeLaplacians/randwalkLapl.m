@@ -1,8 +1,6 @@
 function [L_unorm, Diag] = randwalkLapl(W)
 %RANDWALKLAPL Compute random-walk Laplacian and K smallest eigenvectors
-    fprintf('--------------------------------\n');
-    fprintf('Random Walk Laplacian\n');
-    fprintf('--------------------------------\n');
+    fprintf('# Random Walk Laplacian  #\n');
     % Degree matrix
     Diag = zeros(size(W,1));
     for i = 1:size(W,1)
