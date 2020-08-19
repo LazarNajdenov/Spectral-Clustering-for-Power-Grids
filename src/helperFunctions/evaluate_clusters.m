@@ -18,17 +18,19 @@ function [Confusion, ACC, RCut, NCut, Q] = evaluate_clusters(labels,clusters,W,.
     [RCut, NCut] = computeRCutValue(clusters,W);
     [Q] = QFModul(clusters, W);
     
-    if printflag==1
-        if SimComputed == 0
+    
+    if SimComputed == 0
+        if printflag==1
             fprintf('---------------------\n');
             fprintf('Confusion Matrix\n'); 
             fmt = [repmat('%4d ', 1, size(Confusion,2)-1), '%4d\n'];
             fprintf(fmt, Confusion.');
             fprintf('---------------------\n');
-            fprintf('ACC = %f, RCut = %f, NCut = %f, MOD = %f\n', ACC, RCut, NCut, Q);
-        else
-            fprintf('# RCut = %f, NCut = %f, MOD = %f #\n', RCut, NCut, Q);
         end
+        fprintf('ACC = %f, RCut = %f, NCut = %f, MOD = %f\n', ACC, RCut, NCut, Q);
+    else
+        Confusion = [];
+        ACC = 0;
+        fprintf('# RCut = %f, NCut = %f, MOD = %f \n', RCut, NCut, Q);
     end
-
 end

@@ -53,6 +53,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
     
     % Number of Clusters
     % K = 4;
+    I = eye(size(W));
     fprintf('LAPLACIAN COMPUTATION:\n\n')
     fprintf('##########################\n')
     if laplMat == 1
@@ -64,7 +65,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
         
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
         [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
-        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, eye(size(L)), 4);
+        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, I, 4);
         
         % Eigs computation
         fprintf('# ----------------------------------- #\n')
@@ -78,7 +79,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
         % Manifold computations        
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
         [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
-        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, eye(size(L)), 4);
+        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, I, 4);
         
         % Eigs computation         
         fprintf('# ----------------------------------- #\n')
@@ -128,13 +129,13 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
     fprintf('CLUSTERS EVALUATIONS:\n\n')
     fprintf('######################################################\n')
     fprintf('# Clusters evaluation with eigs                      #\n');
-    evaluate_clusters(label, x_spec, W, 1, SimComputed);
+    evaluate_clusters(label, x_spec, W, 0, SimComputed);
     fprintf('# -------------------------------------------------- #\n')
     fprintf('# Clusters evaluation with manopt grassman           #\n');
-    evaluate_clusters(label, x_spec2, W, 1, SimComputed);
+    evaluate_clusters(label, x_spec2, W, 0, SimComputed);
     fprintf('# -------------------------------------------------- #\n')
     fprintf('# Clusters evaluation with gener. manopt grassman    #\n');
-    evaluate_clusters(label, x_spec3, W, 1, SimComputed);
+    evaluate_clusters(label, x_spec3, W, 0, SimComputed);
     fprintf('######################################################\n')
     
     

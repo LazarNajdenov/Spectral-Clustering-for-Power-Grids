@@ -4,6 +4,7 @@ function [L, Diag, beta] = chooseLapl(W, laplMat)
 %   - unnormalized, if input = 1 
 %   - symmetric normalized, if input = 2
 %   - random-walk Laplacian, if input = 3
+%   - random-walk beta Laplacian, if input = 4
 % and compute the relative K smallest magnitude eigenvectors
 % 
 % Input
