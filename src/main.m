@@ -1,4 +1,4 @@
-function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimComputed)
+function [V, lambda, Xsol, Dsol, L] = main(caseName, laplMat, SimComputed)
 % MAIN main function which clusters real-world datasets using different types of
 % spectral clustering techniques and evaluates the results.
 % 
@@ -64,8 +64,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
         % Manifold computations        
         
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
-        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
-        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, I, 4);
+        [Xsol, Dsol]  = generalized_eigenvalue_computation(L, I, 4);
         
         % Eigs computation
         fprintf('# ----------------------------------- #\n')
@@ -78,8 +77,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
         
         % Manifold computations        
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
-        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
-        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, I, 4);
+        [Xsol, Dsol]  = generalized_eigenvalue_computation(L, I, 4);
         
         % Eigs computation         
         fprintf('# ----------------------------------- #\n')
@@ -92,8 +90,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
         
         % Manifold computations
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
-        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
-        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, Diag, 4);
+        [Xsol, Dsol]  = generalized_eigenvalue_computation(L, Diag, 4);
         
         % Eigs computation
         fprintf('# ----------------------------------- #\n')
@@ -106,13 +103,12 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
         
         % Manifold computations
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
-        [Xsol, ~, Dsol] = Manopt_Grassmann(L, 4);
-        [Xsol2, Dsol2]  = generalized_eigenvalue_computation(L, Diag^(beta), 4);
+        [Xsol, Dsol]  = generalized_eigenvalue_computation(L, Diag^(beta), 4);
         
         % Eigs computation
         fprintf('# ----------------------------------- #\n')
         fprintf('# Eigs computation                    #\n')
-        [V,lambda]      = eigs(L, Diag^(beta), 4, 'SM');
+        [V,lambda]    = eigs(L, Diag^(beta), 4, 'SM');
         
         
     end
@@ -122,7 +118,7 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
     % Compute clustering on eigenvectors     
     x_spec  = kmeans(V, 4,'Replicates', 10);
     x_spec2 = kmeans(Xsol, 4, 'Replicates', 10);
-    x_spec3 = kmeans(Xsol2, 4, 'Replicates', 10);
+    
 
     % Evaluate clustering results, by computing confusion matrix, 
     % accuracy and RatioCut, NormalizedCut
@@ -133,9 +129,6 @@ function [V, lambda, Xsol, Dsol, Xsol2, Dsol2, L] = main(caseName, laplMat, SimC
     fprintf('# -------------------------------------------------- #\n')
     fprintf('# Clusters evaluation with manopt grassman           #\n');
     evaluate_clusters(label, x_spec2, W, 0, SimComputed);
-    fprintf('# -------------------------------------------------- #\n')
-    fprintf('# Clusters evaluation with gener. manopt grassman    #\n');
-    evaluate_clusters(label, x_spec3, W, 0, SimComputed);
     fprintf('######################################################\n')
     
     

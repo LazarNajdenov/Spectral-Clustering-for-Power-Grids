@@ -20,7 +20,7 @@ addpath ../../helperFunctions/similarityFunctions/
 addpath ../../helperFunctions/connectivityFunctions/
 
 betas = 1.1:0.1:1.9;
-%% Artificial/OpenML Datasets Evaluation
+%% Artificial Datasets Evaluation
 warning off
 % For reproducibility, set rng seed
 rng('default');
@@ -38,10 +38,10 @@ load cases_thesis.mat
 
 % Spiral3 dataset kNN = 20
 [SpirAcc, SpirRatio, SpirNCut, SpirQ, betaSpir] = computeMetricsLapl(WSpir, labelSpiral, betas);
-%%
+%% Ecoli dataset evaluation
 % Ecoli dataset kNN = 10, size = 336
 % [EcolAcc, EcolRatio, EcolNCut, EcolQ, betaEcol] = computeMetricsLapl(WEcol, labelEcol, betas);
-
+%% OpenML datasets evaluation
 % Glass dataset kNN = 10, size = 214
 [GlassAcc, GlassRatio, GlassNCut, GlassQ, betaGlass] = computeMetricsLapl(WGlas, labelGlas, betas);
 
@@ -54,7 +54,7 @@ load cases_thesis.mat
 % Umist dataset kNN = 10, size = 575
 [UmisAcc, UmisRatio, UmisNCut, UmisQ, betaUmis] = computeMetricsLapl(WUmist, labelUmist, betas);
 
-%% Power Grids Datasets
+%% Power Grids Datasets Evaluation
 load cases_powergrids.mat
 
 warning off
@@ -69,6 +69,6 @@ rng('default');
 % R15 dataset kNN = 40
 [B1138_Ratio, B1138_NCut, B1138_Q, beta_B1138] = computeMetricsLaplPG(W_B1138, betas, 4);
 
-%% Binary
+%% Binary alpha digits dataset Evaluation
 % Binaryalphadigs dataset kNN = 10, size = 1404
 [BinaAcc, BinaRatio, BinaNCut, BinaQ, betaBina] = computeMetricsLapl(WBina, labelBina, betas);

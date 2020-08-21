@@ -1,8 +1,5 @@
-function [objective] = Manopt_Functional(V,W)
+function [objective] = Manopt_Functional(V,W,K)
 
-N = size(V ,1);
-K = size(V ,2);
-V = rand(N, K);
 objective = 0;
 functional_array = zeros(K,1);
 
@@ -10,7 +7,7 @@ functional_array = zeros(K,1);
 for k = 1:K
     x = V(:,k);
     % call Functional as per B&H
-    temp = 0.5 * x' * W * x;
+    temp = x' * W * x;
     objective = objective + temp;
     functional_array(k) = temp;
 end

@@ -3,26 +3,23 @@ function [Acc, Ratio, NCut, Q] = metricsLapl(L, K, W, Diag, typeLapl, label)
     
     
     I = eye(size(W));
-    % Different Eigenvectors Computations     
-    [V1, ~, ~] = Manopt_Grassmann(L, K);
     
+    % Different Eigenvectors Computations     
     if typeLapl < 3
-        [V2, ~]    = generalized_eigenvalue_computation(L, I, K);
-        [V3, ~]    = eigs(L, K, 'SM');
+        [V1, ~]    = generalized_eigenvalue_computation(L, I, K);
+        [V2, ~]    = eigs(L, K, 'SM');
     else
-        [V2, ~]    = generalized_eigenvalue_computation(L, Diag, K);
-        [V3, ~]    = eigs(L, Diag, K, 'SM');
+        [V1, ~]    = generalized_eigenvalue_computation(L, Diag, K);
+        [V2, ~]    = eigs(L, Diag, K, 'SM');
     end
     
     % Compute accuracies and cuts for by computing 10 replicates of kmeans
     % for each Laplacian to help find a lower, local minimum:
     if isempty(label)
         x_1 = kmeans(V1, K, 'Replicates', 10);
-        [~, ~, Ratio1, NCut1, Q1] = evaluate_clusters(label, x_1, W, 1, 1);
+        [~, ~, Ratio1, NCut1, Q1] = evaluate_clusters(label, x_1, W, 0, 1);
         x_2 = kmeans(V2, K, 'Replicates', 10);
-        [~, ~, Ratio2, NCut2, Q2] = evaluate_clusters(label, x_2, W, 1, 1);
-        x_3 = kmeans(V3, K, 'Replicates', 10);
-        [~, ~, Ratio3, NCut3, Q3] = evaluate_clusters(label, x_3, W, 1, 1);
+        [~, ~, Ratio2, NCut2, Q2] = evaluate_clusters(label, x_2, W, 0, 1);
         Acc = [0;0;0];
         
     else
@@ -30,8 +27,6 @@ function [Acc, Ratio, NCut, Q] = metricsLapl(L, K, W, Diag, typeLapl, label)
         [~, Acc1, Ratio1, NCut1, Q1] = evaluate_clusters(label, x_1, W, 0, 0);
         x_2 = kmeans(V2, K, 'Replicates', 10);
         [~, Acc2, Ratio2, NCut2, Q2] = evaluate_clusters(label, x_2, W, 0, 0);
-        x_3 = kmeans(V3, K, 'Replicates', 10);
-        [~, Acc3, Ratio3, NCut3, Q3] = evaluate_clusters(label, x_3, W, 0, 0);
     
         Acc   = [Acc1; Acc2; Acc3];
     end
