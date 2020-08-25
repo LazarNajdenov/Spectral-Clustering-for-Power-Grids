@@ -1,4 +1,4 @@
-function [Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, K, betas)
+function [Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, K, betas, trace)
 %COMPUTEMETRICSBETAPG compute cuts, and modularity of
 % different clustering results which depend on different values of beta 
 % ranging from 1.1 to 1.9 for constructing the Random-Walk Laplacian
@@ -22,8 +22,10 @@ function [Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, K, betas)
     i = 1;
     while i <= 9
         
-        [V, ~]    = generalized_eigenvalue_computation(L, Diag^(betas(i)), K);
-        [V2, ~]    = eigs(L, Diag^(betas(i)), K, 'SM');
+        % With trace         
+        [V, ~]    = generalized_eigenvalue_computation(L, Diag^(betas(i)), K, 1);
+        % Without trace
+        [V2, ~]    = generalized_eigenvalue_computation(L, Diag^(betas(i)), K, 0);
         
         x_results1(:,i) = kmeans(V, K, 'Replicates', 10);
         x_results2(:,i) = kmeans(V2, K, 'Replicates', 10);
