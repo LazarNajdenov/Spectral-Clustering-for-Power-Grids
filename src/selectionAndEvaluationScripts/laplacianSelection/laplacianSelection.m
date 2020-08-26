@@ -18,7 +18,8 @@ addpath ../../helperFunctions/computeLaplacians/
 addpath ../../helperFunctions/evaluationFunctions/
 addpath ../../helperFunctions/similarityFunctions/
 addpath ../../helperFunctions/connectivityFunctions/
-
+p = genpath('../../manopt');
+addpath(p)
 betas = 1.1:0.1:1.9;
 
 % Power Grids Datasets Evaluation

@@ -1,4 +1,4 @@
-function [Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, K, betas, trace)
+function [Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, K, betas)
 %COMPUTEMETRICSBETAPG compute cuts, and modularity of
 % different clustering results which depend on different values of beta 
 % ranging from 1.1 to 1.9 for constructing the Random-Walk Laplacian
