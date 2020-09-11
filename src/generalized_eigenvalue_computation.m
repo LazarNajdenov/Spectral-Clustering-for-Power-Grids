@@ -1,4 +1,4 @@
-function [Xsol, Dsol] = generalized_eigenvalue_computation(A, B, p, tr)
+function [Vs, Ds] = generalized_eigenvalue_computation(A, B, p, tr)
     fprintf('#######################################\n')
     fprintf('# General. eigenvalue Grassman comput.#\n')
     if ~exist('A', 'var') || isempty(A)
@@ -39,7 +39,8 @@ function [Xsol, Dsol] = generalized_eigenvalue_computation(A, B, p, tr)
 
     % Execute some checks on the derivatives for early debugging.
     % These things can be commented out of course.
-    % checkgradient(problem);
+    fprintf('\nCheck on derivaties for early debugging: \n');     
+    checkgradient(problem);
 
     % Issue a call to a solver. A random initial guess will be chosen and
     % default options are selected except for the ones we specify here.
@@ -57,6 +58,11 @@ function [Xsol, Dsol] = generalized_eigenvalue_computation(A, B, p, tr)
     % To extract the eigenvectors, rotate Xsol by the p-by-p orthogonal
     % matrix Vsol.
     Xsol = Xsol * Vsol;
+    
+    % Put eigenvalues and eigenvectors in ascending order     
+    [~,ind] = sort(diag(Dsol));
+    Ds = Dsol(ind,ind);
+    Vs = Xsol(:,ind);
 
     % This quantity should be small.
     % norm(A*Xsol - B*Xsol*diag(Ssol));
