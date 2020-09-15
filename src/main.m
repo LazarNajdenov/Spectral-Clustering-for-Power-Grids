@@ -1,4 +1,4 @@
-function [V, lambda, Xsol, Dsol, L, K] = main(fileName, laplMat, powerGrid, adj, tr)
+function [V, lambda, Xsol, Dsol, L, K, W] = main(fileName, laplMat, powerGrid, adj, tr)
 % MAIN main function which clusters power-grids datasets using different 
 % types of spectral clustering techniques, by creating 3 types of adjacency 
 % matrices based on respectively:
@@ -63,6 +63,8 @@ function [V, lambda, Xsol, Dsol, L, K] = main(fileName, laplMat, powerGrid, adj,
             fprintf('TODO\n');
         else
             W = paramGraphs.AdjAPF;
+            maxValue = max(max(W));
+            W = W/maxValue;
         end
 %       M = load(fileName);
 %       W = M.Problem.A;
@@ -120,11 +122,11 @@ function [V, lambda, Xsol, Dsol, L, K] = main(fileName, laplMat, powerGrid, adj,
         % Manifold computation
         fprintf('SMALLEST K EIGENVALUES COMPUTATIONS:\n\n')
         if n < 10
-            [Xsol, Dsol]  = generalized_eigenvalue_computation(L, Diag^(beta), 9, tr);
+            [Xsol, Dsol]  = generalized_eigenvalue_computation(L, Diag^(beta), 4, tr);
             % Eigs computation
             fprintf('# ----------------------------------- #\n')
             fprintf('# Eigs computation                    #\n')
-            [V,lambda]    = eigs(L, Diag^(beta), 9, 'SM');
+            [V,lambda]    = eigs(L, Diag^(beta), 4, 'SM');
         else
             [Xsol, Dsol]  = generalized_eigenvalue_computation(L, Diag^(beta), 10, tr);
             % Eigs computation
