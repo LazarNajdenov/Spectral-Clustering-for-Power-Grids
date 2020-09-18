@@ -1,6 +1,6 @@
 function [Vs, Ds] = generalized_eigenvalue_computation(A, B, p, tr)
-    fprintf('#######################################\n')
-    fprintf('# General. eigenvalue Grassman comput.#\n')
+%     fprintf('#######################################\n')
+%     fprintf('# General. eigenvalue Grassman comput.#\n')
     if ~exist('A', 'var') || isempty(A)
         n = 128;
         A = randn(n);
@@ -39,8 +39,8 @@ function [Vs, Ds] = generalized_eigenvalue_computation(A, B, p, tr)
 
     % Execute some checks on the derivatives for early debugging.
     % These things can be commented out of course.
-    fprintf('\nCheck on derivaties for early debugging: \n');     
-    checkgradient(problem);
+    % fprintf('\nCheck on derivaties for early debugging: \n');     
+    % checkgradient(problem);
 
     % Issue a call to a solver. A random initial guess will be chosen and
     % default options are selected except for the ones we specify here.

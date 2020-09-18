@@ -1,8 +1,9 @@
-function [Acc, Ratio, NCut, Q, beta] = computeMetricsBeta(L, Diag, W, K, label, betas)
+function [Acc, Ratio, NCut, Q, beta] = computeMetricsBeta(L, Diag, W, K, label)
 % COMPUTEACCCUTMODULBETA compute accuracy, cuts, and modularity of
 % different clustering results which depend on different values of beta 
 % ranging from 1.1 to 1.9 for constructing the Random-Walk Laplacian
-
+    
+    betas = 1.1:0.1:1.9;
     x_results1       = zeros(size(W, 1), 9);
     x_results2       = zeros(size(W, 1), 9);
     

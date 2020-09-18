@@ -1,4 +1,4 @@
-function [paramsGraph] =  Initialize_problem_PG(mpc)
+function [paramsGraph] =  Initialize_problem_PG(fileName)
 % Initialize a problem from the Sparse Matrix Florida Collection
 % Input
 % SM_case: the sparse matrix case
@@ -6,8 +6,8 @@ function [paramsGraph] =  Initialize_problem_PG(mpc)
 % paramsGraph: struct with the following entries
 %       imbal_ratio
 %       AdjTOP
-%       AdjAPF
 %       AdjADM
+%       AdjAPF
 %       Inc
 %       numberOfEdges
 %       numberOfVertices
@@ -17,6 +17,9 @@ function [paramsGraph] =  Initialize_problem_PG(mpc)
 % pasadd@usi.ch
 
 % coords         = mpc.buslocation;
+
+% Load file
+mpc = loadcase(fileName);
 
 % Retrieve edges list
 paramsGraph.EdgeList       = mpc.branch(:, 1:2);
@@ -63,20 +66,38 @@ for i = 1:size(L,1)
     paramsGraph.Adj(i,i) = 0;
 end
 
-% Adjacency using topology
+% Compute adjacency using topology
 paramsGraph.AdjTOP = - paramsGraph.Adj;
 
-% Adjacency using average power flow
+% Compute adjacency using average power flow
 paramsGraph.AdjAPF = sparse(zeros(size(L)));
 
+% Compute averages of power flows
+results = zeros(paramsGraph.numberOfEdges,1);
 for k = 1: paramsGraph.numberOfEdges
-    e1 = paramsGraph.EdgeList(k, 1);
-    e2 = paramsGraph.EdgeList(k, 2);
     Pf = paramsGraph.PfAndPt(k, 1);
     Pt = paramsGraph.PfAndPt(k, 2);
-    result = (abs(Pf) + abs(Pt)) / 2;
-    paramsGraph.AdjAPF(e1, e2) = result;
-    paramsGraph.AdjAPF(e2, e1) = result;
+    results(k) = (abs(Pf) + abs(Pt)) / 2;
+end
+
+% Take out the minimum of the power flows and divide it by 2 
+m = (min(results(results > 0))) / 2;
+
+for k = 1: paramsGraph.numberOfEdges
+    % Take out indices     
+    e1 = paramsGraph.EdgeList(k, 1);
+    e2 = paramsGraph.EdgeList(k, 2);
+
+    % If the average power flow is 0, put the machine error in order to not
+    % influence the final result     
+    if results(k) == 0
+        paramsGraph.AdjAPF(e1, e2) = m;
+        paramsGraph.AdjAPF(e2, e1) = m;
+    else 
+        paramsGraph.AdjAPF(e1, e2) = results(k);
+        paramsGraph.AdjAPF(e2, e1) = results(k);
+    end
+    
 end
 
 % TODO: Adjacency using admittance
@@ -86,7 +107,7 @@ end
 % Acceptable imbalance ratio between partitions
 paramsGraph.imbal_ratio = 10;
 % Incidence
-paramsGraph.Inc    = adjacency_to_incidence(paramsGraph.AdjTOP);
+paramsGraph.Inc         = adjacency_to_incidence(paramsGraph.AdjTOP);
 % Vertices
 paramsGraph.numberOfVertices = size(paramsGraph.Inc,2);
 

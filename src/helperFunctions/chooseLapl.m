@@ -1,4 +1,4 @@
-function [L, Diag, beta] = chooseLapl(W, laplMat)
+function [L, Diag] = chooseLapl(W, laplMat)
 % CLUSTERROWS function that computes the laplacian matrix
 % L which can be, depending on the input given:
 %   - unnormalized, if input = 1 
@@ -14,7 +14,6 @@ function [L, Diag, beta] = chooseLapl(W, laplMat)
 % V      : K smallest eigenvectors
 % lambda : K smallest eigenvalues
     
-    beta = 0;
     n = size(W,1);
     Diag = zeros(n);
     % Unnormalized Laplacian
@@ -28,7 +27,6 @@ function [L, Diag, beta] = chooseLapl(W, laplMat)
         [L, Diag] = randwalkLapl(W);
     % Random-Walk Beta Laplacian
     elseif laplMat == 4
-        beta = input('# Choose the beta value  #\n');
         [L, Diag] = randomWalkBeta(W);
     end
     fprintf('##########################\n\n\n')

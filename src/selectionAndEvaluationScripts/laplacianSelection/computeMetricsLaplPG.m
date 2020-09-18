@@ -1,4 +1,4 @@
-function [Ratio, NCut, Q, beta] = computeMetricsLaplPG(W, betas, K)
+function [Ratio, NCut, Q, beta] = computeMetricsLaplPG(W, K)
 % COMPUTEMETRICSLAPLPG Computes the metrics on the four different 
 % Laplacians constructed from an adjacency matrix for Power Grid datasets
 
@@ -27,11 +27,8 @@ function [Ratio, NCut, Q, beta] = computeMetricsLaplPG(W, betas, K)
     % Random Walk Laplacian with variable beta
     fprintf('Random-Walk Beta (generalised Grassmann manifold with trace) computation,\n')
     fprintf('and be able to switch to vector computation of the functional:\n')
-    % Modularity is the fraction of the edges that fall within the given 
-    % groups minus the expected fraction if edges were distributed at random. 
-    % The value of the modularity for unweighted and undirected graphs lies 
-    % in the range [-1/2,1].
-    [RatioB, NCutB, QB, beta] = computeMetricsBetaPG(L, Diag, W, K, betas);
+    
+    [RatioB, NCutB, QB, beta] = computeMetricsBetaPG(L, Diag, W, K);
     fprintf('------------------------------------------------------------------------\n\n:')
     % Save all the results in arrays    
     Ratio  = [RatioU; RatioS; RatioR; RatioB];

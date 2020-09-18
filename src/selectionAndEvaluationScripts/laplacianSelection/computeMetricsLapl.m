@@ -1,4 +1,4 @@
-function [Acc, Ratio, NCut, Q, beta] = computeMetricsLapl(W, label, betas)
+function [Acc, Ratio, NCut, Q, beta] = computeMetricsLapl(W, label)
 % COMPUTEMETRICSLAPL Computes the metrics on the four different 
 % Laplacians constructed from an adjacency matrix for Artificial/OpenML datasets
 
@@ -34,7 +34,7 @@ function [Acc, Ratio, NCut, Q, beta] = computeMetricsLapl(W, label, betas)
     % groups minus the expected fraction if edges were distributed at random. 
     % The value of the modularity for unweighted and undirected graphs lies 
     % in the range [-1/2,1].
-    [AccB, RatioB, NCutB, QB, beta] = computeMetricsBeta(L, Diag, W, K, label, betas);
+    [AccB, RatioB, NCutB, QB, beta] = computeMetricsBeta(L, Diag, W, K, label);
     fprintf('------------------------------------\n\n:')
     % Save all the results in arrays    
     Acc    = [AccU, AccS, AccR, AccB];
