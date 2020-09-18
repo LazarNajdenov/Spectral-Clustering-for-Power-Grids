@@ -19,11 +19,7 @@ function [lambdas, Xsol, Dsol, L, K, eigengaps, W] = main(fileName, adj)
     warning off;
     addpath helperFunctions/
     addpath manopt/
-    addpath matpower7.0/
-    addpath matpower7.0/lib/
-    addpath matpower7.0/lib/@opf_model/
-    addpath matpower7.0/lib/@opt_model/
-    addpath matpower7.0/lib/t/
+    addpath(genpath(pwd))
     addpath helperFunctions/plotFunctions/
     addpath helperFunctions/computeLaplacians/
     addpath helperFunctions/evaluationFunctions/
