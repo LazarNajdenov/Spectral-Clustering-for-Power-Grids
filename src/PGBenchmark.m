@@ -7,9 +7,9 @@
 % It also estimates the number of clusters a-priori, 
 % and evaluates the results.
 
-clc;
-clear;
-close all;
+% clc;
+% clear;
+% close all;
 
 warning off;
 addpath helperFunctions/
@@ -132,7 +132,7 @@ for i = 1: nc
     fprintf('######################################################################\n\n');
 end
 
-%% Beta Laplacian computation
+% Beta Laplacian computation
 Ratio = zeros(nc, 2);
 NCut  = zeros(nc, 2);
 Q     = zeros(nc, 2);
