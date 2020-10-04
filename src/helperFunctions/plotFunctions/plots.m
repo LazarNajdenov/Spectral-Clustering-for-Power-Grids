@@ -1,4 +1,4 @@
-function plots(lambdas,eigengaps)
+function plots(lambdas,releigengaps, eigengaps)
 % PLOTS helper function that plots the eigenvalue and the eigengaps
 % distribution
     figure;
@@ -10,9 +10,16 @@ function plots(lambdas,eigengaps)
     set(gca,'fontsize',15);
     % Plot eigengaps distributions     
     figure;
-    plot(eigengaps, 'LineWidth',2,'Color', [0 .6 0]);
+    plot(releigengaps, 'LineWidth',2,'Color', [0 .6 0]);
     xlabel('Eigenvalue');
     ylabel('Relative Eigengap');
+    title('Relative Eigengaps distribution')
+    set(gca,'fontsize',15);
+    
+    figure;
+    plot(eigengaps, 'LineWidth',2,'Color', [0 .6 0]);
+    xlabel('Eigenvalue');
+    ylabel('Eigengap');
     title('Eigengaps distribution')
     set(gca,'fontsize',15);
 end

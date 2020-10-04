@@ -1,4 +1,4 @@
-function [lambdas, Xsol, Dsol, L, K, eigengaps, W] = main(fileName, adj)
+function [lambdas, Xsol, Dsol, L, K, releigengaps, W] = main(fileName, adj)
 % MAIN main function which clusters power-grids datasets using different 
 % types of spectral clustering techniques, by creating 3 types of adjacency 
 % matrices based on respectively:
@@ -59,7 +59,7 @@ function [lambdas, Xsol, Dsol, L, K, eigengaps, W] = main(fileName, adj)
     
     % Search for the biggest eigengap and the index is gives the number of 
     % clusters a priori     
-    [K, eigengaps] = findIndexBigEigengap(Dsol);
+    [K, releigengaps, eigengaps] = findIndexBigEigengap(Dsol);
     
     % Normalize eigenvalues     
     lambdas = diag(lambdas);
@@ -67,7 +67,7 @@ function [lambdas, Xsol, Dsol, L, K, eigengaps, W] = main(fileName, adj)
     
     % Plot first 10 biggest eigenvalues distributions
     % and eigengaps distribution     
-    plots(lambdas, eigengaps);
+    plots(lambdas, releigengaps, eigengaps);
     
     fprintf('RESULTS:\n\n');
     fprintf('# Clusters evaluation with beta = %f and adjacency based on %s \n', beta, adjType);
