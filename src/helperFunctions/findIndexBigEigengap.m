@@ -6,7 +6,7 @@ function [K, releigengaps, eigengaps] = findIndexBigEigengap(lambdas)
     max = 0;
     K   = 2;
     for i = 2: length(lambdas) - 1
-        releigengaps(i) = (lambdas(i+1) - lambdas(i)) / 2;
+        releigengaps(i) = (lambdas(i+1) - lambdas(i)) / lambdas(i);
         eigengaps(i) = (lambdas(i+1) - lambdas(i));
         if releigengaps(i) > max
             max = releigengaps(i);

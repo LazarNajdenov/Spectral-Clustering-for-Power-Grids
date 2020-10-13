@@ -15,7 +15,7 @@ function [Vs, Ds, Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, J)
     while i <= 9
         
         % Generalized eigenvalue_computation with trace         
-        [xsols, dsols]    = generalized_eigenvalue_computation(L, Diag^(betas(i)), J, 1);
+        [xsols, dsols]    = eigs(L, Diag^(betas(i)), J, 'SM');
         
         % Find number of cluster a priori
         dsols  = diag(dsols);

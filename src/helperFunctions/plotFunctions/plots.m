@@ -7,20 +7,22 @@ function plots(lambdas,releigengaps, eigengaps)
     ylabel('Eigenvalue');
     title('Eigenvalues distribution')
     
-    set(gca,'fontsize',15);
+    set(gca,'fontsize', 20);
     % Plot eigengaps distributions     
     figure;
-    plot(releigengaps, 'LineWidth',2,'Color', [0 .6 0]);
+    plot(releigengaps, 'LineWidth',4,'Color', 'cyan','Marker','o',...
+    'MarkerFaceColor','cyan','MarkerSize',8);
     xlabel('Eigenvalue');
     ylabel('Relative Eigengap');
     title('Relative Eigengaps distribution')
-    set(gca,'fontsize',15);
+    set(gca,'fontsize',23);
     
     figure;
-    plot(eigengaps, 'LineWidth',2,'Color', [0 .6 0]);
+    plot(eigengaps, 'LineWidth',4,'Color', 'cyan', 'Marker','o',...
+    'MarkerFaceColor','cyan','MarkerSize',8);
     xlabel('Eigenvalue');
     ylabel('Eigengap');
     title('Eigengaps distribution')
-    set(gca,'fontsize',15);
+    set(gca,'fontsize',23);
 end
 
