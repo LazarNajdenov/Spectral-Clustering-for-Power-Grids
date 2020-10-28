@@ -29,7 +29,7 @@ function [Vs, Ds, Ratio, NCut, Q, beta] = computeMetricsBetaPG(L, Diag, W, J)
                                                    x_results(:,i), W, 0, 1);
         
         if i > 1
-            if ncuts(i) < Q
+            if ncuts(i) < NCut
                 Vs = xsols;
                 Ds = dsols;
                 Ratio = cuts(i);
